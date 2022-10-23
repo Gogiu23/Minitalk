@@ -1,14 +1,45 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/10/23 20:30:17 by gdominic          #+#    #+#              #
+#    Updated: 2022/10/23 22:26:29 by gdominic         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
--include sources.mk
+-include sources_server.mk
+-include sources_client.mk
 -include includes.mk 
 -include sources_bonus.mk
 -include includes_bonus.mk
 
+#=-=-=-=-=-=-=- COLORS DEFINITION =-=-=-=-=-=-=-=-=-#
+
+BLACK			=	\033[0;30m
+RED				=	\033[0;31m
+GREEN			=	\033[0;32m
+ORANGE			=	\033[0;33m
+BLUE			=	\033[0;34m
+PURPLE			=	\033[0;35m
+CYAN			=	\033[0;36m
+LIGHT_GRAY		=	\033[0;37m
+DARK_GRAY		=	\033[1;30m
+LIGHT_RED		=	\033[1;31m
+LIGHT_GREEN		=	\033[1;32m
+YELLOW			=	\033[1;33m
+LIGHT_BLUE		=	\033[1;34m
+LIGHT_PURPLE	=	\033[1;35m
+LIGHT_CYAN		=	\033[1;36m
+WHITE			=	\033[1;37m
+NO_COLOR		=	\033[0m
+
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
-NAME			=minitalk
 C_NAME			=client
 S_NAME			=server
 
@@ -25,15 +56,19 @@ MD				= mkdir -p
 
 INCLUDE_PATH	=./includes
 
-OBJS			=$(SOURCES:.c=.o)
+OBJS_SERVER		=$(SOURCES_SERVER:.c=.o)
+OBJS_CLIENT		=$(SOURCES_CLIENT:.c=.o)
 
 all:
-	$(MAKE) $(NAME)
+	$(MAKE) $(S_NAME) $(C_NAME)
 
-$(NAME): $(MAKE_LIB) $(OBJS) $(INCLUDES) $(MKFL) $(INCLUDE_PATH)
-	$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS) $< -o $@
-	@printf "\033[2K\r$(YELLOW)$(NAME): $(LIGHT_BLUE)$<$(RESET)"
-	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Push_swap Compiled and ready![√]$(RESET)\n"
+$(C_NAME): $(MAKE_LIB) $(OBJS_CLIENT) $(INCLUDES) $(MKFL) $(INCLUDE_PATH)
+	$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_CLIENT) $< -o $(C_NAME)
+	@printf "\033[2K\r $(BLUE)$(C_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
+
+$(S_NAME): $(MAKE_LIB) $(OBJS_SERVER) $(INCLUDES) $(MKFL) $(INCLUDE_PATH)
+	$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_SERVER) $< -o $(S_NAME)
+	@printf "\033[2K\r $(BLUE)$(S_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
 $(MAKE_LIB):
 	make -C libft
@@ -41,30 +76,14 @@ $(MAKE_LIB):
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
-#=-=-=-=-=-=-=-=-=- BONUS =-=-=-=-=-=-=-=-=-=-=-=-=-#
-
-NAME_BONUS			= 
-
-INCLUDE_PATH_BONUS	=./includes_bonus
-
-OBJS_BONUS			=$(SOURCES_BONUS:.c=.o)
-
-bonus:
-	$(MAKE) $(NAME_BONUS)
-
-$(NAME_BONUS): $(MAKE_LIB) $(OBJS_BONUS) $(MKFL)
-	$(CC) $(CFLAGS) -I $(INCLUDE_PATH_BONUS) $(OBJS_BONUS) $< -o $@
-	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Bonus compiled and ready[√]$(RESET)\n"
-	
-#=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
-
 gmk:
-	@find sources -name '*.c' | sed 's/^/SOURCES += /' > sources.mk
+	@find sources_server -name '*.c' | sed 's/^/SOURCES_SERVER += /' > sources_server.mk
+	@find sources_client -name '*.c' | sed 's/^/SOURCES_CLIENT += /' > sources_client.mk
 	@find includes -name '*.h' | sed 's/^/INCLUDES += /' > includes.mk
 
-gmk_bonus:
-	@find sources_bonus -name '*.c' | sed 's/^/SOURCES_BONUS += /' > sources_bonus.mk
-	@find includes_bonus -name '*.h' | sed 's/^/INCLUDES_BONUS += /' > includes_bonus.mk
+#gmk_bonus:
+#	@find sources_bonus -name '*.c' | sed 's/^/SOURCES_BONUS += /' > sources_bonus.mk
+#	@find includes_bonus -name '*.h' | sed 's/^/INCLUDES_BONUS += /' > includes_bonus.mk
 
 clean:
 	@make fclean -C libft

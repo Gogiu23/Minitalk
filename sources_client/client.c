@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 20:48:01 by gdominic          #+#    #+#             */
-/*   Updated: 2022/10/23 22:27:14 by gdominic         ###   ########.fr       */
+/*   Created: 2022/10/23 17:48:00 by gdominic          #+#    #+#             */
+/*   Updated: 2022/10/23 22:26:12 by gdominic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <signal.h>
+#include "libft/includes/libft.h"
+#include "includes/minitalk.h"
 
-void	sig_hand(int sig);
+int	main(int argc, char **argv)
+{
+	int	pid;
+
+	pid = ft_atoi_plus(argv[1]);
+	if (argc != 3)
+		return (-1);
+	ft_printf("Valor de pid: %d\n", pid);
+}
