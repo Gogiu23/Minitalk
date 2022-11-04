@@ -6,7 +6,7 @@
 /*   By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:58:09 by gdominic          #+#    #+#             */
-/*   Updated: 2022/10/23 22:26:45 by gdominic         ###   ########.fr       */
+/*   Updated: 2022/11/04 19:16:10 by gdominic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(void)
 {
 	getpid();
 	ft_printf("PID: (%d)\n", getpid());
-	signal(SIGUSR1, sig_hand);
+//	signal(SIGUSR1, sig_hand);
 }
 
 //void	sig_hand(

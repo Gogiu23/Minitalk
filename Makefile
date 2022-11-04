@@ -6,7 +6,7 @@
 #    By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/23 20:30:17 by gdominic          #+#    #+#              #
-#    Updated: 2022/10/23 22:26:29 by gdominic         ###   ########.fr        #
+#    Updated: 2022/11/04 19:57:13 by gdominic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@
 -include sources_server.mk
 -include sources_client.mk
 -include includes.mk 
--include sources_bonus.mk
 -include includes_bonus.mk
 
 #=-=-=-=-=-=-=- COLORS DEFINITION =-=-=-=-=-=-=-=-=-#
@@ -40,17 +39,19 @@ NO_COLOR		=	\033[0m
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
+NAME			=minitalk
 C_NAME			=client
 S_NAME			=server
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
-MAKE_LIB		= libft.a
+MAKE_LIB		= libft/libft.a
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -I ./libft  
+CFLAGS			= -Wall -Wextra -Werror -g -MMD -MP 
 RM				= rm -rf
 MKFL			= Makefile
 MD				= mkdir -p
+LIB_DIR			= ./libft/includes/
 
 #=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=#
 
@@ -59,20 +60,29 @@ INCLUDE_PATH	=./includes
 OBJS_SERVER		=$(SOURCES_SERVER:.c=.o)
 OBJS_CLIENT		=$(SOURCES_CLIENT:.c=.o)
 
-all:
-	$(MAKE) $(S_NAME) $(C_NAME)
+DEPS_SERVER		=$(SOURCES_SERVER:.c=.d)
+DEPS_CLIENT		=$(SOURCES_CLIENT:.c=.d)
 
-$(C_NAME): $(MAKE_LIB) $(OBJS_CLIENT) $(INCLUDES) $(MKFL) $(INCLUDE_PATH)
-	$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_CLIENT) $< -o $(C_NAME)
+all:
+	$(MAKE) -C libft
+	$(MAKE) $(NAME)
+
+$(NAME):
+	$(MAKE) $(C_NAME)
+	$(MAKE) $(S_NAME)
+
+%.o:	%.c $(MKFL) $(MAKE_LIB)
+	@printf "\r\033[2K\r$(YELLOW)$(NAME): $(LIGHT_BLUE)$<$(RESET)		\r"
+	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) -I $(LIB_DIR) -c $< -o $@
+	@printf "\r\033[2K\r$(YELLOW)Done......✅ $(LIGHT_BLUE)$<$(RESET)		\n"
+
+$(C_NAME): $(OBJS_CLIENT)
+	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_CLIENT) $(MAKE_LIB) -o $(C_NAME)
 	@printf "\033[2K\r $(BLUE)$(C_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
-$(S_NAME): $(MAKE_LIB) $(OBJS_SERVER) $(INCLUDES) $(MKFL) $(INCLUDE_PATH)
-	$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_SERVER) $< -o $(S_NAME)
+$(S_NAME): $(OBJS_SERVER)
+	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_SERVER) $(MAKE_LIB) -o $(S_NAME)
 	@printf "\033[2K\r $(BLUE)$(S_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
-
-$(MAKE_LIB):
-	make -C libft
-	cp libft/libft.a .
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
@@ -88,7 +98,10 @@ gmk:
 clean:
 	@make fclean -C libft
 	@$(RM) $(MAKE_LIB)
-	@$(RM) $(OBJS) $(OBJS_BONUS)
+	@$(RM) $(S_NAME)
+	@$(RM) $(C_NAME)
+	@$(RM) $(OBJS_CLIENT) $(OBJS_SERVER)
+	@$(RM) $(DEPS_CLIENT) $(DEPS_SERVER)
 	@$(RM) a.out
 	@echo "Cleaning all the .o in your libft and project!"
 
@@ -97,6 +110,11 @@ fclean: clean
 	@echo "Cleaning all the compiled library!"
 
 re: fclean all
+
+#=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
+
+-include $(DEPS_SERVER)
+-include $(DEPS_CLIENT)
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 

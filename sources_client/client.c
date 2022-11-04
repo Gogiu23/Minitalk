@@ -6,12 +6,12 @@
 /*   By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:48:00 by gdominic          #+#    #+#             */
-/*   Updated: 2022/10/23 22:26:12 by gdominic         ###   ########.fr       */
+/*   Updated: 2022/11/04 19:42:06 by gdominic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/includes/libft.h"
-#include "includes/minitalk.h"
+#include "../libft/includes/libft.h"
+#include "../includes/minitalk.h"
 
 int	main(int argc, char **argv)
 {
