@@ -6,12 +6,49 @@
 /*   By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:48:00 by gdominic          #+#    #+#             */
-/*   Updated: 2022/11/04 19:42:06 by gdominic         ###   ########.fr       */
+/*   Updated: 2022/11/05 14:08:34 by gdominic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/includes/libft.h"
 #include "../includes/minitalk.h"
+
+void	ft_chatobi(unsigned char str, int pid)
+{
+	int	bit;
+
+	bit = 0;
+	ft_printf("XD en chatobi\n");
+	while (bit < 8)
+	{
+		if ((str & (1 << (7 - bit))) == 0)
+		{
+			if (kill(pid, SIGUSR1) == - 1)
+				ft_putstr_error("Error\n");
+		}
+		else
+		{
+			if (kill(pid, SIGUSR2) == - 1)
+				ft_putstr_error("Error\n");
+		}
+		bit++;
+		usleep(400);
+	}
+}
+				
+
+void	ft_send_sig(int pid, char *str)
+{
+	int	i;
+
+	i = 0;
+	ft_printf("XD");
+	while (str[i])
+	{
+		ft_chatobi(str[i], pid);
+		i++;
+	}
+}
 
 int	main(int argc, char **argv)
 {
@@ -19,6 +56,8 @@ int	main(int argc, char **argv)
 
 	pid = ft_atoi_plus(argv[1]);
 	if (argc != 3)
-		return (-1);
+		ft_putstr_error("Error\nNumber of args incorrect\n");
 	ft_printf("Valor de pid: %d\n", pid);
+	ft_send_sig(pid, argv[2]);
+	return(0);
 }
