@@ -6,7 +6,7 @@
 /*   By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:58:09 by gdominic          #+#    #+#             */
-/*   Updated: 2022/11/05 14:09:55 by gdominic         ###   ########.fr       */
+/*   Updated: 2022/11/07 09:00:32 by gdominic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_sigin(int signal)
 	int				bit;
 	unsigned char	c;
 
-	ft_printf("XD");
 	bit = 0;
 	c = '\0';
 	c = c << 1;
@@ -31,10 +30,10 @@ void	ft_sigin(int signal)
 	if (bit == 8)
 	{
 		write(1, &c, 1);
-//		ft_putchar(c);
 		bit = 0;
 		c = '\0';
 	}
+	ft_printf("Valor de c: %s\n", c);
 }
 
 int	main(int argc, char **argv)
