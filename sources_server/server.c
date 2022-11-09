@@ -6,7 +6,7 @@
 /*   By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:58:09 by gdominic          #+#    #+#             */
-/*   Updated: 2022/11/07 09:00:32 by gdominic         ###   ########.fr       */
+/*   Updated: 2022/11/09 01:44:16 by gdominic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 
 void	ft_sigin(int signal)
 {
-	int				bit;
-	unsigned char	c;
+	static int				bit = 0;
+	static unsigned char	c = '\0';
 
-	bit = 0;
-	c = '\0';
 	c = c << 1;
 	if (signal == SIGUSR1)
 	{
@@ -29,23 +27,24 @@ void	ft_sigin(int signal)
 	bit++;
 	if (bit == 8)
 	{
-		write(1, &c, 1);
+		ft_putchar((unsigned char ) c);
 		bit = 0;
 		c = '\0';
 	}
-	ft_printf("Valor de c: %s\n", c);
 }
 
 int	main(int argc, char **argv)
 {
-	getpid();
-	ft_printf("PID: (%d)\n", getpid());
+	int	pid;
+
+	pid = getpid();
 	argv = NULL;
 	if (argc != 1)
 		ft_putstr_error("Error\nToo many arguments");
+	ft_printf("PID: %d\n", pid);
 	signal(SIGUSR1, &ft_sigin);
 	signal(SIGUSR2, &ft_sigin);
 	while (1)
 		pause();
-	return(0);
+	return (0);
 }
