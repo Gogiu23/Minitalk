@@ -6,7 +6,7 @@
 #    By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/23 20:30:17 by gdominic          #+#    #+#              #
-#    Updated: 2022/11/04 19:57:13 by gdominic         ###   ########.fr        #
+#    Updated: 2022/11/12 01:48:41 by gdominic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,16 +84,49 @@ $(S_NAME): $(OBJS_SERVER)
 	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_SERVER) $(MAKE_LIB) -o $(S_NAME)
 	@printf "\033[2K\r $(BLUE)$(S_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
-#=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
+#=-=-=-=-=-=-=-=-=-= BONUS -=-=-=-=-=-=-=-=-=-=-=-=-#
 
+NAME_BONUS				=minitalk_bonus
+C_BONUS_NAME			=client_bonus
+S_BONUS_NAME			=server_bonus
+
+
+INCLUDE_PATH_BONUS		=./includes_bonus
+
+OBJS_SERVER_BONUS		=$(SOURCES_SERVER_BONUS:.c=.o)
+OBJS_CLIENT_BONUS		=$(SOURCES_CLIENT_BONUS:.c=.o)
+
+DEPS_SERVER_BONUS		=$(SOURCES_SERVER_BONUS:.c=.d)
+DEPS_CLIENT_BONUS		=$(SOURCES_CLIENT_BONUS:.c=.d)
+
+bonus:
+	$(MAKE) -C libft
+	$(MAKE) $(NAME_BONUS)
+
+$(NAME_BONUS):
+	$(MAKE) $(C_BONUS_NAME)
+	$(MAKE) $(S_BONUS_NAME)
+
+$(C_BONUS_NAME): $(MAKE_LIB) $(OBJS_CLIENT_BONUS)
+	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH_BONUS) $(OBJS_CLIENT_BONUS) $(MAKE_LIB) -o $(C_BONUS_NAME)
+	@printf "\033[2K\r$(YELLOW)$(C_BONUS_NAME): $(LIGHT_BLUE)$<$(RESET)"
+	@printf "\033[2K\r $(BLUE)$(C_BONUS_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
+
+$(S_BONUS_NAME): $(MAKE_LIB) $(OBJS_SERVER_BONUS)
+	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH_BONUS) $(OBJS_SERVER_BONUS) $(MAKE_LIB) -o $(S_BONUS_NAME)
+	@printf "\033[2K\r$(YELLOW)$(S_BONUS_NAME): $(LIGHT_BLUE)$<$(RESET)"
+	@printf "\033[2K\r $(BLUE)$(S_BONUS_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+	
 gmk:
 	@find sources_server -name '*.c' | sed 's/^/SOURCES_SERVER += /' > sources_server.mk
 	@find sources_client -name '*.c' | sed 's/^/SOURCES_CLIENT += /' > sources_client.mk
 	@find includes -name '*.h' | sed 's/^/INCLUDES += /' > includes.mk
 
-#gmk_bonus:
-#	@find sources_bonus -name '*.c' | sed 's/^/SOURCES_BONUS += /' > sources_bonus.mk
-#	@find includes_bonus -name '*.h' | sed 's/^/INCLUDES_BONUS += /' > includes_bonus.mk
+gmk_bonus:
+	@find sources_bonus -name '*.c' | sed 's/^/SOURCES_BONUS += /' > sources_bonus.mk
+	@find includes_bonus -name '*.h' | sed 's/^/INCLUDES_BONUS += /' > includes_bonus.mk
 
 clean:
 	@make fclean -C libft
@@ -115,6 +148,8 @@ re: fclean all
 
 -include $(DEPS_SERVER)
 -include $(DEPS_CLIENT)
+-include $(DEPS_CLIENT_BONUS)
+-include $(DEPS_SERVER_BONUS)
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
