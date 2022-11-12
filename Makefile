@@ -6,7 +6,7 @@
 #    By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/23 20:30:17 by gdominic          #+#    #+#              #
-#    Updated: 2022/11/12 12:51:35 by gdominic         ###   ########.fr        #
+#    Updated: 2022/11/12 18:13:23 by gdominic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ S_NAME			=server
 
 MAKE_LIB		= libft/libft.a
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -g -MMD -MP 
+CFLAGS			= -Wall -Wextra -Werror -g -MMD
 RM				= rm -rf
 MKFL			= Makefile
 MD				= mkdir -p
@@ -77,15 +77,15 @@ $(NAME):
 
 %.o:	%.c $(MKFL) $(MAKE_LIB)
 	@printf "\r\033[2K\r$(YELLOW)$(NAME): $(LIGHT_BLUE)$<$(RESET)		\r"
-	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) -I $(LIB_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) -I $(INCLUDE_PATH_BONUS) -I $(LIB_DIR) -c $< -o $@
 	@printf "\r\033[2K\r$(YELLOW)Done......✅ $(LIGHT_BLUE)$<$(RESET)		\n"
 
 $(C_NAME): $(MAKE_LIB) $(OBJS_CLIENT)
-	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_CLIENT) $(MAKE_LIB) -o $(C_NAME)
+	@$(CC) $(CFLAGS) $^ -o $@
 	@printf "\033[2K\r $(BLUE)$(C_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
 $(S_NAME): $(MAKE_LIB) $(OBJS_SERVER)
-	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_SERVER) $(MAKE_LIB) -o $(S_NAME)
+	@$(CC) $(CFLAGS) $^ -o $@
 	@printf "\033[2K\r $(BLUE)$(S_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
 #=-=-=-=-=-=-=-=-=-= BONUS -=-=-=-=-=-=-=-=-=-=-=-=-#
@@ -112,16 +112,16 @@ $(NAME_BONUS):
 	$(MAKE) $(S_BONUS_NAME)
 
 $(C_BONUS_NAME): $(MAKE_LIB) $(OBJS_CLIENT_BONUS)
-	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH_BONUS) $(OBJS_CLIENT_BONUS) $(MAKE_LIB) -o $(C_BONUS_NAME)
+	@$(CC) $(CFLAGS) $^ -o $@
 	@printf "\033[2K\r$(YELLOW)$(C_BONUS_NAME): $(LIGHT_BLUE)$<$(RESET)"
 	@printf "\033[2K\r $(BLUE)$(C_BONUS_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
 $(S_BONUS_NAME): $(MAKE_LIB) $(OBJS_SERVER_BONUS)
-	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH_BONUS) $(OBJS_SERVER_BONUS) $(MAKE_LIB) -o $(S_BONUS_NAME)
+	@$(CC) $(CFLAGS) $^ -o $@
 	@printf "\033[2K\r$(YELLOW)$(S_BONUS_NAME): $(LIGHT_BLUE)$<$(RESET)"
 	@printf "\033[2K\r $(BLUE)$(S_BONUS_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+#=-=-=-=-=-=-=-=-=-=-= RULES =-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 	
 gmk:
 	@find sources_server -name '*.c' | sed 's/^/SOURCES_SERVER += /' > sources_server.mk
@@ -129,8 +129,8 @@ gmk:
 	@find includes -name '*.h' | sed 's/^/INCLUDES += /' > includes.mk
 
 gmk_bonus:
-	@find sources_server -name '*.c' | sed 's/^/SOURCES_SERVER_BONUS += /' > sources_server.mk
-	@find sources_client -name '*.c' | sed 's/^/SOURCES_CLIENT_BONUS += /' > sources_client.mk
+	@find sources_server_bonus -name '*.c' | sed 's/^/SOURCES_SERVER_BONUS += /' > sources_server_bonus.mk
+	@find sources_client_bonus -name '*.c' | sed 's/^/SOURCES_CLIENT_BONUS += /' > sources_client_bonus.mk
 	@find includes_bonus -name '*.h' | sed 's/^/INCLUDES_BONUS += /' > includes_bonus.mk
 
 clean:
@@ -151,7 +151,7 @@ fclean: clean
 	@$(RM) $(NAME) $(NAME_BONUS)
 	@echo "Cleaning all the compiled library!"
 
-re: fclean all
+re: fclean all bonus
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
