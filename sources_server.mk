@@ -1,1 +1,1 @@
-SOURCES_SERVER += sources_server/server.c
+SOURCES_SERVER_BONUS += sources_server/server.c

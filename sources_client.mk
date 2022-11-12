@@ -1,1 +1,1 @@
-SOURCES_CLIENT += sources_client/client.c
+SOURCES_CLIENT_BONUS += sources_client/client.c

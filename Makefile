@@ -6,14 +6,18 @@
 #    By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/23 20:30:17 by gdominic          #+#    #+#              #
-#    Updated: 2022/11/12 01:48:41 by gdominic         ###   ########.fr        #
+#    Updated: 2022/11/12 12:51:35 by gdominic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
 -include sources_server.mk
+-include sources_server_bonus.mk
+
 -include sources_client.mk
+-include sources_client_bonus.mk
+
 -include includes.mk 
 -include includes_bonus.mk
 
@@ -76,11 +80,11 @@ $(NAME):
 	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) -I $(LIB_DIR) -c $< -o $@
 	@printf "\r\033[2K\r$(YELLOW)Done......✅ $(LIGHT_BLUE)$<$(RESET)		\n"
 
-$(C_NAME): $(OBJS_CLIENT)
+$(C_NAME): $(MAKE_LIB) $(OBJS_CLIENT)
 	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_CLIENT) $(MAKE_LIB) -o $(C_NAME)
 	@printf "\033[2K\r $(BLUE)$(C_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
-$(S_NAME): $(OBJS_SERVER)
+$(S_NAME): $(MAKE_LIB) $(OBJS_SERVER)
 	@$(CC) $(CFLAGS) -I $(INCLUDE_PATH) $(OBJS_SERVER) $(MAKE_LIB) -o $(S_NAME)
 	@printf "\033[2K\r $(BLUE)$(S_NAME): $(ORANGE) Compiled and ready![√]$(RESET)\n"
 
@@ -125,7 +129,8 @@ gmk:
 	@find includes -name '*.h' | sed 's/^/INCLUDES += /' > includes.mk
 
 gmk_bonus:
-	@find sources_bonus -name '*.c' | sed 's/^/SOURCES_BONUS += /' > sources_bonus.mk
+	@find sources_server -name '*.c' | sed 's/^/SOURCES_SERVER_BONUS += /' > sources_server.mk
+	@find sources_client -name '*.c' | sed 's/^/SOURCES_CLIENT_BONUS += /' > sources_client.mk
 	@find includes_bonus -name '*.h' | sed 's/^/INCLUDES_BONUS += /' > includes_bonus.mk
 
 clean:
@@ -133,8 +138,12 @@ clean:
 	@$(RM) $(MAKE_LIB)
 	@$(RM) $(S_NAME)
 	@$(RM) $(C_NAME)
+	@$(RM) $(S_BONUS_NAME)
+	@$(RM) $(C_BONUS_NAME)
 	@$(RM) $(OBJS_CLIENT) $(OBJS_SERVER)
 	@$(RM) $(DEPS_CLIENT) $(DEPS_SERVER)
+	@$(RM) $(OBJS_CLIENT_BONUS) $(OBJS_SERVER_BONUS)
+	@$(RM) $(DEPS_CLIENT_BONUS) $(DEPS_SERVER_BONUS)
 	@$(RM) a.out
 	@echo "Cleaning all the .o in your libft and project!"
 
@@ -148,6 +157,7 @@ re: fclean all
 
 -include $(DEPS_SERVER)
 -include $(DEPS_CLIENT)
+
 -include $(DEPS_CLIENT_BONUS)
 -include $(DEPS_SERVER_BONUS)
 
