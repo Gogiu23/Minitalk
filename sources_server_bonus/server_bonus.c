@@ -6,7 +6,7 @@
 /*   By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 12:47:52 by gdominic          #+#    #+#             */
-/*   Updated: 2022/11/13 19:39:55 by gdominic         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:55:27 by gdominic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int	main(int argc, char **argv)
 	pid = getpid();
 	ft_printf("PID: %d\n", pid);
 	m1.sa_flags = SA_SIGINFO;
-	m2.sa_sigaction = &ft_sigin_bonus;
+	m1.sa_sigaction = ft_sigin_bonus;
 	sigaction(SIGUSR1, &m1, NULL);
-	m1.sa_flags = SA_SIGINFO;
-	m2.sa_sigaction = &ft_sigin_bonus;
+	m2.sa_flags = SA_SIGINFO;
+	m2.sa_sigaction = ft_sigin_bonus;
 	sigaction(SIGUSR2, &m2, NULL);
 	while (1)
 		pause();
