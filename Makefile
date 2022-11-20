@@ -6,7 +6,7 @@
 #    By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/23 20:30:17 by gdominic          #+#    #+#              #
-#    Updated: 2022/11/12 18:13:23 by gdominic         ###   ########.fr        #
+#    Updated: 2022/11/20 12:49:48 by gdominic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,15 +123,15 @@ $(S_BONUS_NAME): $(MAKE_LIB) $(OBJS_SERVER_BONUS)
 
 #=-=-=-=-=-=-=-=-=-=-= RULES =-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 	
-gmk:
-	@find sources_server -name '*.c' | sed 's/^/SOURCES_SERVER += /' > sources_server.mk
-	@find sources_client -name '*.c' | sed 's/^/SOURCES_CLIENT += /' > sources_client.mk
-	@find includes -name '*.h' | sed 's/^/INCLUDES += /' > includes.mk
-
-gmk_bonus:
-	@find sources_server_bonus -name '*.c' | sed 's/^/SOURCES_SERVER_BONUS += /' > sources_server_bonus.mk
-	@find sources_client_bonus -name '*.c' | sed 's/^/SOURCES_CLIENT_BONUS += /' > sources_client_bonus.mk
-	@find includes_bonus -name '*.h' | sed 's/^/INCLUDES_BONUS += /' > includes_bonus.mk
+//gmk:
+//	@find sources_server -name '*.c' | sed 's/^/SOURCES_SERVER += /' > sources_server.mk
+//	@find sources_client -name '*.c' | sed 's/^/SOURCES_CLIENT += /' > sources_client.mk
+//	@find includes -name '*.h' | sed 's/^/INCLUDES += /' > includes.mk
+//
+//gmk_bonus:
+//	@find sources_server_bonus -name '*.c' | sed 's/^/SOURCES_SERVER_BONUS += /' > sources_server_bonus.mk
+//	@find sources_client_bonus -name '*.c' | sed 's/^/SOURCES_CLIENT_BONUS += /' > sources_client_bonus.mk
+//	@find includes_bonus -name '*.h' | sed 's/^/INCLUDES_BONUS += /' > includes_bonus.mk
 
 clean:
 	@make fclean -C libft
