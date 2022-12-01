@@ -6,7 +6,7 @@
 #    By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/23 20:30:17 by gdominic          #+#    #+#              #
-#    Updated: 2022/12/01 19:46:12 by gdominic         ###   ########.fr        #
+#    Updated: 2022/12/01 19:48:35 by gdominic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,8 @@ DEPS_SERVER		=$(SOURCES_SERVER:.c=.d)
 DEPS_CLIENT		=$(SOURCES_CLIENT:.c=.d)
 
 all:
+	git submodule init
+	git submodule update
 	$(MAKE) -C libft
 	$(MAKE) $(NAME)
 
