@@ -6,7 +6,7 @@
 /*   By: gdominic <gdominic@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:48:00 by gdominic          #+#    #+#             */
-/*   Updated: 2022/11/12 12:26:03 by gdominic         ###   ########.fr       */
+/*   Updated: 2022/12/01 19:44:40 by gdominic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_send_sig(int pid, char *str)
 int	main(int argc, char **argv)
 {
 	int	pid;
-	
+
 	if (argc != 3)
 		ft_putstr_error("Error\nNumber of args incorrect\n");
 	pid = ft_atoi_plus(argv[1]);
